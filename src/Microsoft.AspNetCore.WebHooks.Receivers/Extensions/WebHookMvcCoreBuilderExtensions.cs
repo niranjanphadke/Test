@@ -3,9 +3,12 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.WebHooks;
+using Microsoft.AspNetCore.WebHooks.ApplicationModels;
 using Microsoft.AspNetCore.WebHooks.Filters;
+using Microsoft.AspNetCore.WebHooks.Routing;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -29,6 +32,13 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             var services = builder.Services;
+            services
+                .TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, WebHookMetadataProvider>());
+            services
+                .TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, WebHookModelBindingProvider>());
+            services
+                .TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, WebHookRoutingProvider>());
+
             services.TryAddSingleton<IWebHookReceiverConfig, WebHookReceiverConfig>();
             services.TryAddSingleton<WebHookApplicableFilter>();
             services.TryAddSingleton<WebHookMultipleEventMapperConstraint>();
