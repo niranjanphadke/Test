@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.WebHooks.Properties;
 namespace Microsoft.AspNetCore.WebHooks
 {
     /// <summary>
-    /// An <see cref="Attribute"/> indicating the associated action is a GitHub WebHooks endpoint. Specifies whether
+    /// An <see cref="Attribute"/> indicating the associated action is a GitHub WebHook endpoint. Specifies whether
     /// the action <see cref="AcceptFormData"/>, optional <see cref="EventName"/>, and optional
     /// <see cref="WebHookAttribute.Id"/>. Also adds a <see cref="Filters.WebHookReceiverExistsFilter"/> for
     /// the action.
@@ -20,16 +20,16 @@ namespace Microsoft.AspNetCore.WebHooks
         /// <summary>
         /// <para>
         /// Instantiates a new <see cref="GitHubWebHookAttribute"/> indicating the associated action is a GitHub
-        /// WebHooks endpoint.
+        /// WebHook endpoint.
         /// </para>
         /// <para>The signature of the action should be:
         /// <code>
-        /// Task{IActionResult} ActionName(string id, string[] event, TData data)
+        /// Task{IActionResult} ActionName(string id, string @event, TData data)
         /// </code>
         /// or include the subset of parameters required. <c>TData</c> must be compatible with expected requests.
         /// </para>
         /// <para>This constructor should usually be used at most once in a WebHook application.</para>
-        /// <para>The default route <see cref="IRouteTemplateProvider.Name"/> is <c>null</c>.</para>
+        /// <para>The default route <see cref="Mvc.Routing.IRouteTemplateProvider.Name"/> is <c>null</c>.</para>
         /// </summary>
         public GitHubWebHookAttribute()
             : base(GitHubConstants.ReceiverName)
