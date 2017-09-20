@@ -10,6 +10,7 @@ namespace Microsoft.AspNetCore.WebHooks.Metadata
     /// </summary>
     public class BitbucketMetadata :
         WebHookMetadata,
+        IWebHookBindingMetadata,
         IWebHookEventMetadata,
         IWebHookRequestMetadataService,
         IWebHookSecurityMetadata
@@ -21,6 +22,23 @@ namespace Microsoft.AspNetCore.WebHooks.Metadata
             : base(BitbucketConstants.ReceiverName)
         {
         }
+
+        // IWebHookBindingMetadata...
+
+        /// <inheritdoc />
+        public IReadOnlyList<WebHookParameter> Parameters => new List<WebHookParameter>
+        {
+            new WebHookParameter(
+                BitbucketConstants.WebHookIdParameterName1,
+                BitbucketConstants.WebHookIdHeaderName,
+                isQueryParameter: false,
+                isRequired: true),
+            new WebHookParameter(
+                BitbucketConstants.WebHookIdParameterName2,
+                BitbucketConstants.WebHookIdHeaderName,
+                isQueryParameter: false,
+                isRequired: true),
+        };
 
         // IWebHookEventMetadata...
 
