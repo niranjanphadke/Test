@@ -8,10 +8,17 @@ using Microsoft.AspNetCore.WebHooks.Properties;
 namespace Microsoft.AspNetCore.WebHooks
 {
     /// <summary>
+    /// <para>
     /// An <see cref="Attribute"/> indicating the associated action is a GitHub WebHook endpoint. Specifies whether
     /// the action <see cref="AcceptFormData"/>, optional <see cref="EventName"/>, and optional
     /// <see cref="WebHookAttribute.Id"/>. Also adds a <see cref="Filters.WebHookReceiverExistsFilter"/> for
     /// the action.
+    /// </para>
+    /// <para>
+    /// An example GitHub WebHook URI is
+    /// '<c>https://&lt;host&gt;/api/webhooks/incoming/github/{id}</c>'. See
+    /// <c>https://developer.github.com/webhooks/</c> for additional details about GitHub WebHook requests.
+    /// </para>
     /// </summary>
     public class GitHubWebHookAttribute : WebHookAttribute, IWebHookRequestMetadata, IWebHookEventSelectorMetadata
     {

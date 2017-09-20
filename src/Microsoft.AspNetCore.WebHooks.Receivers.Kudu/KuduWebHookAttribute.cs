@@ -4,9 +4,17 @@
 namespace Microsoft.AspNetCore.WebHooks
 {
     /// <summary>
+    /// <para>
     /// An <see cref="System.Attribute"/> indicating the associated action is a Kudu WebHook endpoint. Specifies the
     /// optional <see cref="WebHookAttribute.Id"/>. Also adds a <see cref="Filters.WebHookReceiverExistsFilter"/> for
     /// the action.
+    /// </para>
+    /// <para>
+    /// An example Kudu WebHook URI is
+    /// '<c>https://&lt;host&gt;/api/webhooks/incoming/kudu/{id}?code=83699ec7c1d794c0c780e49a5c72972590571fd8</c>'.
+    /// See <c>https://github.com/projectkudu/kudu/wiki/Web-hooks</c> for additional details about Kudu WebHook
+    /// requests.
+    /// </para>
     /// </summary>
     public class KuduWebHookAttribute : WebHookAttribute
     {
