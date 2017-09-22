@@ -31,7 +31,7 @@ namespace Microsoft.AspNetCore.WebHooks.Metadata
         public string PingEventName => null;
 
         /// <inheritdoc />
-        public string QueryParameterKey => null;
+        public string QueryParameterName => null;
 
         // IWebHookRequestMetadataService...
 
