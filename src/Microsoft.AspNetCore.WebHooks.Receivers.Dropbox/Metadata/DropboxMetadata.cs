@@ -9,7 +9,8 @@ namespace Microsoft.AspNetCore.WebHooks.Metadata
     public class DropboxMetadata :
         WebHookMetadata,
         IWebHookEventMetadata,
-        IWebHookRequestMetadataService
+        IWebHookRequestMetadataService,
+        IWebHookSecurityMetadata
     {
         /// <summary>
         /// Instantiates a new <see cref="DropboxMetadata"/> instance.
@@ -37,5 +38,16 @@ namespace Microsoft.AspNetCore.WebHooks.Metadata
 
         /// <inheritdoc />
         public WebHookBodyType BodyType => WebHookBodyType.Json;
+
+        // IWebHookSecurityMetadata...
+
+        public bool VerifyCodeParameter => false;
+
+        public bool ShortCircuitGetRequests => true;
+
+        public WebHookGetRequest WebHookGetRequest { get; } = new WebHookGetRequest(
+            DropboxConstants.ChallengeQueryParameterName,
+            DropboxConstants.SecretMinLength,
+            DropboxConstants.SecretMaxLength);
     }
 }

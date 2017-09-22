@@ -18,10 +18,6 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
     /// </summary>
     public class DropboxVerifySignatureFilter : WebHookVerifySignatureFilter, IAsyncResourceFilter
     {
-        internal const int SecretMinLength = 15;
-        internal const int SecretMaxLength = 128;
-        internal const string SignatureHeaderName = "X-Dropbox-Signature";
-
         /// <summary>
         /// Instantiates a new <see cref="DropboxVerifySignatureFilter"/> instance.
         /// </summary>
@@ -59,14 +55,14 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 HttpMethods.IsPost(request.Method))
             {
                 // 1. Get the expected hash from the signature header.
-                var header = GetRequestHeader(request, SignatureHeaderName, out var errorResult);
+                var header = GetRequestHeader(request, DropboxConstants.SignatureHeaderName, out var errorResult);
                 if (errorResult != null)
                 {
                     context.Result = errorResult;
                     return;
                 }
 
-                var expectedHash = GetDecodedHash(header, SignatureHeaderName, out errorResult);
+                var expectedHash = GetDecodedHash(header, DropboxConstants.SignatureHeaderName, out errorResult);
                 if (errorResult != null)
                 {
                     context.Result = errorResult;
@@ -78,8 +74,8 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                     request,
                     routeData,
                     ReceiverName,
-                    SecretMinLength,
-                    SecretMaxLength);
+                    DropboxConstants.SecretMinLength,
+                    DropboxConstants.SecretMaxLength);
                 if (secretKey == null)
                 {
                     context.Result = new NotFoundResult();
@@ -94,7 +90,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 if (!SecretEqual(expectedHash, actualHash))
                 {
                     // Log about the issue and short-circuit remainder of the pipeline.
-                    errorResult = CreateBadSignatureResult(request, SignatureHeaderName);
+                    errorResult = CreateBadSignatureResult(request, DropboxConstants.SignatureHeaderName);
 
                     context.Result = errorResult;
                     return;
