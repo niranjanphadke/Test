@@ -137,8 +137,8 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 var headersCount = headers.Count;
                 Logger.LogInformation(
                     400,
-                    "Expecting exactly one '{HeaderName}' header field in the WebHook request but found {HeaderCount}. " +
-                    "Please ensure that the request contains exactly one '{HeaderName}' header field.",
+                    "Expecting exactly one '{HeaderName}' header field in the WebHook request but found " +
+                    "{HeaderCount}. Please ensure that the request contains exactly one '{HeaderName}' header field.",
                     headerName,
                     headersCount);
 
@@ -277,8 +277,8 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
 
             Logger.LogError(
                 402,
-                "The WebHook signature provided by the '{HeaderName}' header field does not match the value expected " +
-                "by the '{ReceiverType}' receiver. WebHook request is invalid.",
+                "The WebHook signature provided by the '{HeaderName}' header field does not match the value " +
+                "expected by the '{ReceiverType}' receiver. WebHook request is invalid.",
                 signatureHeaderName,
                 GetType().Name);
 
