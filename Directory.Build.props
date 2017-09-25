@@ -51,6 +51,7 @@
 
   <!-- Additional specifics of this repository. -->
   <PropertyGroup>
+    <GenerateNuspecDependsOn>_SetPackageOutputPath;$(GenerateNuspecDependsOn)</GenerateNuspecDependsOn>
     <Product>Microsoft ASP.NET Core WebHooks</Product>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/aspnet/WebHooks</RepositoryUrl>

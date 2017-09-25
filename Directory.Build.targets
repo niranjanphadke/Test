@@ -1,3 +1,9 @@
 <Project>
-  <!-- Currently empty. But, will stop MsBuild searching parent directories for this file. -->
+  <!-- Will also stop MsBuild searching parent directories for this file. -->
+  <Target Name="_SetPackageOutputPath">
+    <PropertyGroup>
+      <!-- At this point, properties have NuGet's defaults. Still want to give user override control. -->
+      <PackageOutputPath Condition=" '$(PackageOutputPath)' == 'bin\$(Configuration)\' ">$(RepositoryRoot)bin\$(Configuration)\</PackageOutputPath>
+    </PropertyGroup>
+  </Target>
 </Project>
