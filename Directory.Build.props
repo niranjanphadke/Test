@@ -31,20 +31,16 @@
   </PropertyGroup>
 
   <!-- Build numbers -->
-  <!-- TODO: Update solution build to set at least $(BuildNumber) consistently for all projects. -->
+  <!-- TODO: Update solution build to use a unique $(BuildNumber) per build (same for all projects). -->
   <PropertyGroup>
     <_TwoDigitYear>$([MSBuild]::Subtract($([System.DateTime]::UtcNow.Year), 2000))</_TwoDigitYear>
     <_ThreeDigitDayOfYear>$([System.DateTime]::UtcNow.DayOfYear.ToString().PadLeft(3, '0'))</_ThreeDigitDayOfYear>
-
-    <!-- Use minutes to work around https://github.com/NuGet/Home/issues/5500 -->
-    <_MinuteBasedTimeStamp>$([System.DateTime]::UtcNow.Subtract($([System.DateTime]::FromBinary(635556672000000000))).TotalMinutes.ToString("F0"))</_MinuteBasedTimeStamp>
-    <_MinuteBasedTimeStamp>t$([System.Int64]::Parse($(_MinuteBasedTimeStamp)).ToString("x9"))</_MinuteBasedTimeStamp>
-
     <AssemblyRevision>$(_TwoDigitYear)$(_ThreeDigitDayOfYear)</AssemblyRevision>
 
-    <!-- TeamCity CI sets the $BUILD_NUMBER environment variable. But, fall back to using current minutes. -->
+    <!-- TeamCity CI sets the $BUILD_NUMBER environment variable. But, fall back when building locally. -->
+    <!-- Use constant value to work around https://github.com/NuGet/Home/issues/5500 -->
     <BuildNumber Condition=" '$(BUILDNUMBER)' == '' AND '$(BUILD_NUMBER)' != '' ">$(BUILD_NUMBER)</BuildNumber>
-    <BuildNumber Condition=" '$(BUILDNUMBER)' == '' ">$(_MinuteBasedTimeStamp)</BuildNumber>
+    <BuildNumber Condition=" '$(BUILDNUMBER)' == '' ">t000</BuildNumber>
 
     <VersionSuffix Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)-$(BuildNumber)</VersionSuffix>
   </PropertyGroup>
