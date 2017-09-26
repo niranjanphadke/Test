@@ -8,6 +8,7 @@ namespace Microsoft.AspNetCore.WebHooks
     /// </summary>
     public static class DynamicsCRMConstants
     {
+        // ??? Some old-world receivers verify a property exists in the request body. Add an action filter for this?
         /// <summary>
         /// Gets the name of the JSON property in a Dynamics CRM WebHook request body containing a value somewhat
         /// an event name.
