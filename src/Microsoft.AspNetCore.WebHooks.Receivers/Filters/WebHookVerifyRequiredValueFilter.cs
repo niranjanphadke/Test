@@ -110,6 +110,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                         VerifyHeader(headers, sourceName, receiverName, out message);
                     if (!found)
                     {
+                        // Do not return after first error. Instead log about all issues.
                         context.Result = WebHookResultUtilities.CreateErrorResult(message);
                     }
                 }

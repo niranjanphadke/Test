@@ -160,7 +160,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// <summary>
         /// Returns the SHA1 HMAC of the given <paramref name="request"/>'s body.
         /// </summary>
-        /// <param name="request">The <see cref="HttpRequest"/>.</param>
+        /// <param name="request">The current <see cref="HttpRequest"/>.</param>
         /// <param name="secret">The key data used to initialize the <see cref="HMACSHA1"/>.</param>
         /// <returns>
         /// A <see cref="Task"/> that on completion provides a <see cref="byte"/> array containing the SHA1 HMAC of the
@@ -188,7 +188,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// <summary>
         /// Returns the SHA256 HMAC of the given <paramref name="request"/>'s body.
         /// </summary>
-        /// <param name="request">The <see cref="HttpRequest"/>.</param>
+        /// <param name="request">The current <see cref="HttpRequest"/>.</param>
         /// <param name="secret">The key data used to initialize the <see cref="HMACSHA256"/>.</param>
         /// <returns>
         /// A <see cref="Task"/> that on completion provides a <see cref="byte"/> array containing the SHA256 HMAC of

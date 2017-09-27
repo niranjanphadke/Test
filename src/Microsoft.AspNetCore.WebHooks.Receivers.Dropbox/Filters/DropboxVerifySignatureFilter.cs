@@ -79,6 +79,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 if (secretKey == null)
                 {
                     context.Result = new NotFoundResult();
+                    return;
                 }
 
                 var secret = Encoding.UTF8.GetBytes(secretKey);
