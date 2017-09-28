@@ -162,6 +162,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
 
             // 1. Check if we've already found the configured lookup table for this id.
             routeData.TryGetReceiverId(out var id);
+            id = id ?? string.Empty;
             if (_lookupTables.TryGetValue(id, out var lookupTable))
             {
                 // Success.

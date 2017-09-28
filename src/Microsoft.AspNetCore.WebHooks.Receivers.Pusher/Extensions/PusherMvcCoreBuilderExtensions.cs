@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Microsoft.AspNetCore.WebHooks.Filters;
 using Microsoft.AspNetCore.WebHooks.Metadata;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -30,7 +31,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return builder
                 .AddJsonFormatters()
-                .AddWebHooks();
+                .AddWebHooks()
+                .AddSingletonFilter<PusherVerifySignatureFilter>(WebHookSecurityFilter.Order);
         }
     }
 }
