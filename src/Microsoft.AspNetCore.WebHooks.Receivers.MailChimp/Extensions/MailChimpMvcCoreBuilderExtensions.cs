@@ -28,9 +28,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IWebHookMetadata, MailChimpMetadata>());
 
-            return builder
-                .AddJsonFormatters()
-                .AddWebHooks();
+            return builder.AddWebHooks();
         }
     }
 }
