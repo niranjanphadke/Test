@@ -3,6 +3,7 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebHooks.Properties;
 
 namespace Microsoft.AspNetCore.WebHooks.Utilities
@@ -34,6 +35,25 @@ namespace Microsoft.AspNetCore.WebHooks.Utilities
             };
 
             return new BadRequestObjectResult(error);
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="ObjectResult"/> containing the error messages found i
+        /// <paramref name="modelState"/>.
+        /// </summary>
+        /// <param name="modelState">The <see cref="ModelStateEntry"/> to search for error messages.</param>
+        /// <returns>
+        /// A new <see cref="ObjectResult"/> containing the error messages found in <paramref name="modelState"/>.
+        /// </returns>
+        /// <remarks>Should not be called if <see cref="ModelStateDictionary.IsValid"/> is <c>true</c>.</remarks>
+        public static ObjectResult CreateErrorResult(ModelStateDictionary modelState)
+        {
+            if (modelState == null)
+            {
+                throw new ArgumentNullException(nameof(modelState));
+            }
+
+            return new BadRequestObjectResult(modelState);
         }
 
         /// <summary>

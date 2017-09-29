@@ -14,9 +14,9 @@ using Microsoft.Extensions.Logging;
 namespace Microsoft.AspNetCore.WebHooks.Filters
 {
     /// <summary>
-    /// An <see cref="IResourceFilter"/> to allow only POST WebHook requests. To support GET or HEAD requests the
-    /// receiver project should register an earlier <see cref="IResourceFilter"/> which always short-circuits such
-    /// requests.
+    /// An <see cref="IResourceFilter"/> to allow only POST WebHook requests with a non-empty request body. To support
+    /// GET or HEAD requests the receiver project should set
+    /// <see cref="Metadata.IWebHookSecurityMetadata.ShortCircuitGetRequests"/> in its metadata service.
     /// </summary>
     /// <remarks>
     /// Done as an <see cref="IResourceFilter"/> implementation and not an
@@ -72,7 +72,10 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
 
             var request = context.HttpContext.Request;
             if (context.RouteData.TryGetReceiverName(out var receiverName) &&
-                !HttpMethods.IsPost(request.Method))
+                (request.Body == null ||
+                 !request.ContentLength.HasValue ||
+                 request.ContentLength.Value == 0L ||
+                 !HttpMethods.IsPost(request.Method)))
             {
                 // Log about the issue and short-circuit remainder of the pipeline.
                 context.Result = CreateBadMethodResult(request);
