@@ -143,9 +143,8 @@ namespace Microsoft.AspNetCore.WebHooks
                     CultureInfo.CurrentCulture,
                     Resources.Config_AddFailure,
                     configurationName,
-                    id,
-                    ex.Message);
-                throw new InvalidOperationException(message);
+                    id);
+                throw new InvalidOperationException(message, ex);
             }
         }
 
