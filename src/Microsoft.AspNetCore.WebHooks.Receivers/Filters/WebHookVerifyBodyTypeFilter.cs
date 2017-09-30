@@ -54,7 +54,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// <list type="number">
         /// <item><description>
         /// Confirm signature or <c>code</c> query parameter (e.g. in <see cref="WebHookVerifyCodeFilter"/> or a
-        /// <see cref="WebHookVerifySignatureFilter"/> subclass).
+        /// <see cref="WebHookVerifyBodyContentFilter"/> subclass).
         /// </description></item>
         /// <item><description>
         /// Confirm required headers and query parameters are provided (in

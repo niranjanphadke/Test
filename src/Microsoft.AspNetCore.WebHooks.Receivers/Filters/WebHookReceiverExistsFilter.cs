@@ -20,7 +20,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
     /// <see cref="IWebHookSecurityMetadata.VerifyCodeParameter"/> is <c>true</c> or at least one
     /// <see cref="IWebHookReceiver"/> filter is configured to handle this request. The minimal configuration for a
     /// receiver without <see cref="IWebHookSecurityMetadata.VerifyCodeParameter"/> <c>true</c> includes a
-    /// <see cref="WebHookVerifySignatureFilter"/> subclass to verify signatures.
+    /// <see cref="WebHookVerifyBodyContentFilter"/> subclass to verify signatures.
     /// </summary>
     public class WebHookReceiverExistsFilter : IResourceFilter
     {

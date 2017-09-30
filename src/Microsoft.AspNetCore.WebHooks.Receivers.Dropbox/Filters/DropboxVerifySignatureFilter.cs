@@ -16,7 +16,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
     /// An <see cref="IResourceFilter"/> that verifies the Dropbox signature header. Confirms the header exists, reads
     /// Body bytes, and compares the hashes.
     /// </summary>
-    public class DropboxVerifySignatureFilter : WebHookVerifySignatureFilter, IAsyncResourceFilter
+    public class DropboxVerifySignatureFilter : WebHookVerifyBodyContentFilter, IAsyncResourceFilter
     {
         /// <summary>
         /// Instantiates a new <see cref="DropboxVerifySignatureFilter"/> instance.

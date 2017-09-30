@@ -23,7 +23,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
     /// An <see cref="IResourceFilter"/> that verifies the Pusher signature header. Confirms the header exists, reads
     /// Body bytes, and compares the hashes.
     /// </summary>
-    public class PusherVerifySignatureFilter : WebHookVerifySignatureFilter, IAsyncResourceFilter
+    public class PusherVerifySignatureFilter : WebHookVerifyBodyContentFilter, IAsyncResourceFilter
     {
         // Character that appears between key pairs.
         private static readonly char[] BetweenPairSeparators = new[] { ';' };

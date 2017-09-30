@@ -22,14 +22,14 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
 {
     /// <summary>
     /// Base class for <see cref="IWebHookReceiver"/> and <see cref="Mvc.Filters.IResourceFilter"/> or
-    /// <see cref="Mvc.Filters.IAsyncResourceFilter"/> implementations that verify request signatures.
-    /// Subclasses should have an <see cref="Mvc.Filters.IOrderedFilter.Order"/> less than
-    /// <see cref="WebHookSecurityFilter.Order"/>.
+    /// <see cref="Mvc.Filters.IAsyncResourceFilter"/> implementations that verify request body content e.g. filters
+    /// that verify signatures of request body content. Subclasses should have an
+    /// <see cref="Mvc.Filters.IOrderedFilter.Order"/> equal to <see cref="WebHookSecurityFilter.Order"/>.
     /// </summary>
-    public abstract class WebHookVerifySignatureFilter : WebHookSecurityFilter, IWebHookReceiver
+    public abstract class WebHookVerifyBodyContentFilter : WebHookSecurityFilter, IWebHookReceiver
     {
         /// <summary>
-        /// Instantiates a new <see cref="WebHookVerifySignatureFilter"/> instance.
+        /// Instantiates a new <see cref="WebHookVerifyBodyContentFilter"/> instance.
         /// </summary>
         /// <param name="loggerFactory">
         /// The <see cref="ILoggerFactory"/> used to initialize <see cref="WebHookSecurityFilter.Logger"/>.
@@ -38,7 +38,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// The <see cref="IWebHookReceiverConfig"/> used to initialize
         /// <see cref="WebHookSecurityFilter.Configuration"/> and <see cref="WebHookSecurityFilter.ReceiverConfig"/>.
         /// </param>
-        protected WebHookVerifySignatureFilter(ILoggerFactory loggerFactory, IWebHookReceiverConfig receiverConfig)
+        protected WebHookVerifyBodyContentFilter(ILoggerFactory loggerFactory, IWebHookReceiverConfig receiverConfig)
             : base(loggerFactory, receiverConfig)
         {
         }

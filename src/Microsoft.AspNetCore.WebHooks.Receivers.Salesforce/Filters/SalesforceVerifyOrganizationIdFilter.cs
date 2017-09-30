@@ -19,8 +19,6 @@ using Microsoft.Extensions.Options;
 
 namespace Microsoft.AspNetCore.WebHooks.Filters
 {
-    // TODO: Rename WebHookVerifySignatureFilter since this subclass is not checking a signature. VerifyBody?
-    //
     // TODO: Create base version of this filter (likely as an IActionFilter) for use in e.g. Azure Alert, Dynamics CRM,
     // TODO: Kudu, MailChimp, and Pusher receivers. Filter would require event name in request body and map that event
     // TODO: name to route data. This would support model binding but not event-based action selection.
@@ -30,7 +28,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
     /// confirms the organization id and event name is present and that the organization id matches the configured
     /// secret key.
     /// </summary>
-    public class SalesforceVerifyOrganizationIdFilter : WebHookVerifySignatureFilter, IAsyncResourceFilter
+    public class SalesforceVerifyOrganizationIdFilter : WebHookVerifyBodyContentFilter, IAsyncResourceFilter
     {
         // Serialize ModelState errors, especially top-level input formatter issues, similarly to
         // CreateErrorResult(..., message, ...).
