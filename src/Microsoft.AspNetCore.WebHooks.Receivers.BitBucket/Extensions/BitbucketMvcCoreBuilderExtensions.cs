@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    // TODO: Add IMvcBuilder variant of this class.
     /// <summary>
     /// Extension methods for setting up Bitbucket WebHooks in an <see cref="IMvcCoreBuilder" />.
     /// </summary>

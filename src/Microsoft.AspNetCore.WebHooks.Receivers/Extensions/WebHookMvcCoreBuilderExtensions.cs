@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    // TODO: Add IMvcBuilder variant of this class.
+    // TODO: Add IMvcBuilder variant of this class. Do the same for all receiver-specific extension methods too.
     /// <summary>
     /// Extension methods for setting up WebHooks in an <see cref="IMvcCoreBuilder" />.
     /// </summary>

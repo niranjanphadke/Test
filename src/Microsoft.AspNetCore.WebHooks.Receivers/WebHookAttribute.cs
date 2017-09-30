@@ -24,6 +24,8 @@ namespace Microsoft.AspNetCore.WebHooks
     {
         private string _id;
 
+        // TODO: Move attribute constructors' comments, especially the recommended action signatures, to class level.
+        // TODO: Do the same for all subclasses. As-is important information is hard to find.
         /// <summary>
         /// <para>
         /// Instantiates a new <see cref="WebHookAttribute"/> indicating the associated action is a WebHook

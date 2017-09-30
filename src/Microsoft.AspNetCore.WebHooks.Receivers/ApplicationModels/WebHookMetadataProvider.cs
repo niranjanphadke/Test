@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.WebHooks.Metadata;
 
 namespace Microsoft.AspNetCore.WebHooks.ApplicationModels
 {
-    // TODO: Add resources for exceptions thrown here.
     /// <summary>
     /// <para>
     /// An <see cref="IApplicationModelProvider"/> implementation that adds <see cref="IWebHookMetadata"/>

@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    // TODO: Add IMvcBuilder variant of this class.
     /// <summary>
     /// Extension methods for setting up GitHub WebHooks in an <see cref="IMvcCoreBuilder" />.
     /// </summary>
