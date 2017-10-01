@@ -19,7 +19,7 @@ namespace Microsoft.AspNet.WebHooks
 {
     /// <summary>
     /// Provides an event loop which dequeues messages from a Microsoft Azure Queue and then sends the
-    /// WebHook to the recipients. If the delivery success then the message is removed from the queue, otherwise it remains so that another 
+    /// WebHook to the recipients. If the delivery success then the message is removed from the queue, otherwise it remains so that another
     /// attempt can be made. After a given number of attempts the message is discarded without being delivered.
     /// </summary>
     public class AzureWebHookDequeueManager : IDisposable
