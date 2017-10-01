@@ -123,7 +123,8 @@ namespace Microsoft.AspNetCore.WebHooks.ApplicationModels
 
                 default:
                     // If additional parameters are configured and match, map them. If not, treat IFormCollection,
-                    // JContainer and XElement parameters as data.
+                    // JContainer and XElement parameters as data. IsAssignableFrom(...) looks reversed because this
+                    // check is about model binding system support, not an actual assignment to the parameter.
                     //
                     // ??? Should fallbacks support NameValueCollection here and in model binding to ease migration
                     // ??? from current WebHooks?
@@ -161,6 +162,8 @@ namespace Microsoft.AspNetCore.WebHooks.ApplicationModels
 
         private static void SourceEvent(BindingInfo bindingInfo, Type parameterType)
         {
+            // IsAssignableFrom(...) looks reversed because this check is about model binding system support, not an
+            // actual assignment to the parameter.
             if (typeof(string) != parameterType &&
                 !typeof(IEnumerable<string>).IsAssignableFrom(parameterType))
             {

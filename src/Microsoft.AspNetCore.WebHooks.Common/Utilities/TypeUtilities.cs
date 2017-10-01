@@ -5,14 +5,14 @@ using System.Reflection;
 
 namespace Microsoft.AspNetCore.WebHooks.Utilities
 {
+    // TODO: Remove this class if it remains unused.
     /// <summary>
     /// Provides various <see cref="System.Type"/>-related utilities.
     /// </summary>
     public static class TypeUtilities
     {
-        // ??? Okay that this is a bit more stringent than Microsoft.AspNet.WebHooks version i.e. this version
-        // ??? disallows nested classes and open generic types?
-        // Modeled after ControllerFeatureProvider.IsController() in ASP.NET Core MVC.
+        // Modeled after ControllerFeatureProvider.IsController() in ASP.NET Core MVC. This is a bit more stringent
+        // than Microsoft.AspNet.WebHooks version i.e. it disallows nested classes and open generic types.
         /// <summary>
         /// Checks whether <paramref name="type"/> is a visible, non-abstract class of type <typeparamref name="T"/> or
         /// derived from type <typeparamref name="T"/>.

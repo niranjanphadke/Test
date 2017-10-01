@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Microsoft.AspNetCore.WebHooks.Utilities
 {
+    // TODO: Remove this class if it remains unused.
     /// <summary>
     /// Provides non-cryptographic hashing functions.
     /// </summary>

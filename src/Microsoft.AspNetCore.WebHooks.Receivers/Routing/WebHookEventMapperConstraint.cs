@@ -136,7 +136,7 @@ namespace Microsoft.AspNetCore.WebHooks.Routing
             }
             else
             {
-                // ??? This repeatedly allocates the same strings. Might be good to cache the first 10 or so keys.
+                // ??? This repeatedly allocates the same strings. Might be good to cache the first 100 or so keys.
                 for (var i = 0; i < events.Length; i++)
                 {
                     routeValues[$"{WebHookConstants.EventKeyName}[{i}]"] = events[i];

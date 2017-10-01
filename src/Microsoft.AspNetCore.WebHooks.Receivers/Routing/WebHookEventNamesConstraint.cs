@@ -79,7 +79,7 @@ namespace Microsoft.AspNetCore.WebHooks.Routing
                     {
                         var candidate = context.Candidates[i];
 
-                        // ??? Any better to choose constraints that also have Order==int.MexValue?
+                        // ??? Any better to choose all constraints that have Order==int.MexValue?
                         var constraints = context.Candidates.OfType<WebHookEventNamesConstraint>();
                         var innerContext = new ActionConstraintContext
                         {
