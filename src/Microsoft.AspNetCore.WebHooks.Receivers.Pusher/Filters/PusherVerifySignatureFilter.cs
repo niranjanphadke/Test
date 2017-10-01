@@ -129,7 +129,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 if (!SecretEqual(expectedHash, actualHash))
                 {
                     // Log about the issue and short-circuit remainder of the pipeline.
-                    errorResult = CreateBadSignatureResult(request, PusherConstants.SignatureHeaderName);
+                    errorResult = CreateBadSignatureResult(receiverName, PusherConstants.SignatureHeaderName);
 
                     context.Result = errorResult;
                     return;

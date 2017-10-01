@@ -262,32 +262,27 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// Returns a new <see cref="IActionResult"/> that when executed produces a response indicating that a
         /// request had an invalid signature and as a result could not be processed.
         /// </summary>
-        /// <param name="request">The current <see cref="HttpRequest"/>.</param>
+        /// <param name="receiverName">The name of an available <see cref="IWebHookReceiver"/>.</param>
         /// <param name="signatureHeaderName">The name of the HTTP header with invalid contents.</param>
         /// <returns>
         /// An <see cref="IActionResult"/> that when executed will produce a response with status code 400 "Bad
         /// Request" and containing details about the problem.
         /// </returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposed by caller")]
-        protected virtual IActionResult CreateBadSignatureResult(HttpRequest request, string signatureHeaderName)
+        protected virtual IActionResult CreateBadSignatureResult(string receiverName, string signatureHeaderName)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
             Logger.LogError(
                 402,
                 "The WebHook signature provided by the '{HeaderName}' header field does not match the value " +
-                "expected by the '{ReceiverType}' receiver. WebHook request is invalid.",
+                "expected by the '{ReceiverName}' receiver. WebHook request is invalid.",
                 signatureHeaderName,
-                GetType().Name);
+                receiverName);
 
             var message = string.Format(
                 CultureInfo.CurrentCulture,
                 Resources.VerifySignature_BadSignature,
                 signatureHeaderName,
-                GetType().Name);
+                receiverName);
             var badSignature = WebHookResultUtilities.CreateErrorResult(message);
 
             return badSignature;

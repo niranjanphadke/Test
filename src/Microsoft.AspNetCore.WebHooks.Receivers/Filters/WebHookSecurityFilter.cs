@@ -102,13 +102,14 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// not be further processed.
         /// </summary>
         /// <remarks>This method does allow local HTTP requests using <c>localhost</c>.</remarks>
+        /// <param name="receiverName">The name of an available <see cref="IWebHookReceiver"/>.</param>
         /// <param name="request">The current <see cref="HttpRequest"/>.</param>
         /// <returns>
         /// <see langword="null"/> in the success case. When a check fails, an <see cref="IActionResult"/> that when
         /// executed will produce a response containing details about the problem.
         /// </returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposed by caller.")]
-        protected virtual IActionResult EnsureSecureConnection(HttpRequest request)
+        protected virtual IActionResult EnsureSecureConnection(string receiverName, HttpRequest request)
         {
             if (request == null)
             {
@@ -128,15 +129,15 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
             {
                 Logger.LogError(
                     500,
-                    "The WebHook receiver '{ReceiverType}' requires HTTPS in order to be secure. " +
+                    "The '{ReceiverName}' WebHook receiver requires HTTPS in order to be secure. " +
                     "Please register a WebHook URI of type '{SchemeName}'.",
-                    GetType().Name,
+                    receiverName,
                     Uri.UriSchemeHttps);
 
                 var message = string.Format(
                     CultureInfo.CurrentCulture,
                     Resources.Security_NoHttps,
-                    GetType().Name,
+                    receiverName,
                     Uri.UriSchemeHttps);
                 var noHttps = WebHookResultUtilities.CreateErrorResult(message);
 

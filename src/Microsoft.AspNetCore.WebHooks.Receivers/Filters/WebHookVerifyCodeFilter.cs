@@ -116,7 +116,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 throw new ArgumentNullException(nameof(receiverName));
             }
 
-            var result = EnsureSecureConnection(request);
+            var result = EnsureSecureConnection(receiverName, request);
             if (result != null)
             {
                 return result;

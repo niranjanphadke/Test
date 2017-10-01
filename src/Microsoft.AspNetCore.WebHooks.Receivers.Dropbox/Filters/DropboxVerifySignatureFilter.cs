@@ -91,7 +91,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 if (!SecretEqual(expectedHash, actualHash))
                 {
                     // Log about the issue and short-circuit remainder of the pipeline.
-                    errorResult = CreateBadSignatureResult(request, DropboxConstants.SignatureHeaderName);
+                    errorResult = CreateBadSignatureResult(receiverName, DropboxConstants.SignatureHeaderName);
 
                     context.Result = errorResult;
                     return;

@@ -95,7 +95,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
 
             // 1. Confirm we were reached using HTTPS.
             var request = context.HttpContext.Request;
-            var errorResult = EnsureSecureConnection(request);
+            var errorResult = EnsureSecureConnection(receiverName, request);
             if (errorResult != null)
             {
                 context.Result = errorResult;
