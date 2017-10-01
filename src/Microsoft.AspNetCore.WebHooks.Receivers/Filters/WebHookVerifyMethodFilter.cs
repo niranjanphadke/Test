@@ -78,7 +78,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                  !HttpMethods.IsPost(request.Method)))
             {
                 // Log about the issue and short-circuit remainder of the pipeline.
-                context.Result = CreateBadMethodResult(request);
+                context.Result = CreateBadMethodResult(request.Method, receiverName);
             }
         }
 
@@ -88,19 +88,19 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
             // No-op
         }
 
-        private IActionResult CreateBadMethodResult(HttpRequest request)
+        private IActionResult CreateBadMethodResult(string methodName, string receiverName)
         {
             _logger.LogError(
                 0,
-                "The HTTP '{RequestMethod}' method is not supported by the '{ReceiverType}' WebHook receiver.",
-                request.Method,
-                GetType().Name);
+                "The HTTP '{RequestMethod}' method is not supported by the '{ReceiverName}' WebHook receiver.",
+                methodName,
+                receiverName);
 
             var message = string.Format(
                 CultureInfo.CurrentCulture,
                 Resources.VerifyMethod_BadMethod,
-                request.Method,
-                GetType().Name);
+                methodName,
+                receiverName);
 
             // ??? Should we instead provide CreateErrorResult(...) overloads with `int statusCode` parameters?
             var badMethod = WebHookResultUtilities.CreateErrorResult(message);
