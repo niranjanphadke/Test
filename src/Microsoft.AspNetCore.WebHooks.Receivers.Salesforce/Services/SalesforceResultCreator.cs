@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebHooks.Properties;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNetCore.WebHooks
+namespace Microsoft.AspNetCore.WebHooks.Services
 {
     /// <summary>
     /// The default <see cref="ISalesforceResultCreator"/> implementation.
@@ -29,7 +29,7 @@ namespace Microsoft.AspNetCore.WebHooks
         }
 
         /// <inheritdoc />
-        public async Task<IActionResult> GetFailedResultAsync(string message)
+        public async Task<ContentResult> GetFailedResultAsync(string message)
         {
             var resource = await GetResourceAsync("Microsoft.AspNetCore.WebHooks.Messages.FaultResponse.xml");
             var formattedResource = string.Format(CultureInfo.CurrentCulture, resource, message);
@@ -38,7 +38,7 @@ namespace Microsoft.AspNetCore.WebHooks
         }
 
         /// <inheritdoc />
-        public async Task<IActionResult> GetSuccessResultAsync()
+        public async Task<ContentResult> GetSuccessResultAsync()
         {
             var resource = await GetResourceAsync("Microsoft.AspNetCore.WebHooks.Messages.NotificationResponse.xml");
 
@@ -46,16 +46,16 @@ namespace Microsoft.AspNetCore.WebHooks
         }
 
         /// <summary>
-        /// Gets an <see cref="IActionResult"/> that when executed will produce a response with given
+        /// Gets an <see cref="ContentResult"/> that when executed will produce a response with given
         /// <paramref name="content"/> and <paramref name="statusCode"/>.
         /// </summary>
         /// <param name="content">The requested XML-formatted content of the response.</param>
         /// <param name="statusCode">The HTTP status code of the response.</param>
         /// <returns>
-        /// An <see cref="IActionResult"/> that when executed will produce a response with given
+        /// An <see cref="ContentResult"/> that when executed will produce a response with given
         /// <paramref name="content"/> and <paramref name="statusCode"/>.
         /// </returns>
-        protected virtual IActionResult GetXmlResult(string content, int statusCode)
+        protected virtual ContentResult GetXmlResult(string content, int statusCode)
         {
             return new ContentResult
             {

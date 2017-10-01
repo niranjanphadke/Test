@@ -9,10 +9,21 @@ namespace Microsoft.AspNetCore.WebHooks
     /// the optional <see cref="WebHookAttribute.Id"/>. Also adds a <see cref="Filters.WebHookReceiverExistsFilter"/>
     /// for the action.
     /// </para>
+    /// <para>The signature of the action should be:
+    /// <code>
+    /// Task{IActionResult} ActionName(string id, string @event, TData data)
+    /// </code>
+    /// or include the subset of parameters required. <c>TData</c> must be compatible with expected requests e.g.
+    /// <see cref="System.Xml.Linq.XElement"/> or <see cref="SalesforceNotifications"/>.
+    /// </para>
     /// <para>
-    /// An example Salesforce WebHook URI is
-    /// '<c>https://&lt;host&gt;/api/webhooks/incoming/sfsoap/{id}?code=83699ec7c1d794c0c780e49a5c72972590571fd8</c>'.
-    /// See <c></c> for additional details about Salesforce WebHook
+    /// The '<c>MS_WebHookReceiverSecret_SalesforceSoap</c>' configuration value contains Salesforce Organization IDs.
+    /// The Organizational IDs can be found at <c>http://www.salesforce.com</c> under
+    /// <c>Setup | Company Profile | Company Information</c>.
+    /// </para>
+    /// <para>
+    /// An example Salesforce WebHook URI is '<c>https://&lt;host&gt;/api/webhooks/incoming/sfsoap/{id}</c>'.
+    /// See <c>https://go.microsoft.com/fwlink/?linkid=838587</c> for additional details about Salesforce WebHook
     /// requests.
     /// </para>
     /// </summary>
@@ -22,13 +33,6 @@ namespace Microsoft.AspNetCore.WebHooks
         /// <para>
         /// Instantiates a new <see cref="SalesforceWebHookAttribute"/> indicating the associated action is a
         /// Salesforce WebHook endpoint.
-        /// </para>
-        /// <para>The signature of the action should be:
-        /// <code>
-        /// Task{IActionResult} ActionName(string id, TData data)
-        /// </code>
-        /// or include the subset of parameters required. <c>TData</c> must be compatible with expected requests e.g.
-        /// <see cref="System.Xml.Linq.XElement"/> or <see cref="SalesforceNotifications"/>.
         /// </para>
         /// <para>This constructor should usually be used at most once in a WebHook application.</para>
         /// <para>The default route <see cref="Mvc.Routing.IRouteTemplateProvider.Name"/> is <c>null</c>.</para>

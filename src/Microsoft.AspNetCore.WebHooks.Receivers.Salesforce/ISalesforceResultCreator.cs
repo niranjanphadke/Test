@@ -12,24 +12,24 @@ namespace Microsoft.AspNetCore.WebHooks
     public interface ISalesforceResultCreator
     {
         /// <summary>
-        /// Gets an <see cref="IActionResult"/> that when executed will produce a response with status code 400 "Bad
+        /// Gets an <see cref="ContentResult"/> that when executed will produce a response with status code 400 "Bad
         /// Request" and an XML body containing <paramref name="message"/>.
         /// </summary>
         /// <param name="message">The error message string to include in the XML-formatted response.</param>
         /// <returns>
-        /// A <see cref="Task{IActionResult}"/> that on completion provides an <see cref="IActionResult"/> that when
+        /// A <see cref="Task{ContentResult}"/> that on completion provides an <see cref="ContentResult"/> that when
         /// executed will produce the desired response.
         /// </returns>
-        Task<IActionResult> GetFailedResultAsync(string message);
+        Task<ContentResult> GetFailedResultAsync(string message);
 
         /// <summary>
         /// Gets an <see cref="IActionResult"/> that when executed will produce a response with status code 200 "OK"
         /// and an XML body containing a Salesforce acknowledgment message.
         /// </summary>
         /// <returns>
-        /// A <see cref="Task{IActionResult}"/> that on completion provides an <see cref="IActionResult"/> that when
+        /// A <see cref="Task{ContentResult}"/> that on completion provides an <see cref="ContentResult"/> that when
         /// executed will produce the desired response.
         /// </returns>
-        Task<IActionResult> GetSuccessResultAsync();
+        Task<ContentResult> GetSuccessResultAsync();
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Internal;        // ??? IHttpRequestStreamReaderFactory is pub-Internal.
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.WebHooks.Properties;
 using Microsoft.AspNetCore.WebHooks.Utilities;
 using Microsoft.Extensions.Logging;
@@ -53,7 +54,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// The <see cref="IWebHookReceiverConfig"/> used to initialize
         /// <see cref="WebHookSecurityFilter.Configuration"/> and <see cref="WebHookSecurityFilter.ReceiverConfig"/>.
         /// </param>
-        /// <param name="resultCreator"></param>
+        /// <param name="resultCreator">The <see cref="ISalesforceResultCreator"/>.</param>
         public SalesforceVerifyOrganizationIdFilter(
             ILoggerFactory loggerFactory,
             IModelMetadataProvider metadataProvider,
@@ -84,6 +85,24 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 throw new ArgumentNullException(nameof(next));
             }
 
+            var routeData = context.RouteData;
+            if (!routeData.TryGetReceiverName(out var receiverName) ||
+                !IsApplicable(receiverName))
+            {
+                await next();
+                return;
+            }
+
+            // 1. Confirm we were reached using HTTPS.
+            var request = context.HttpContext.Request;
+            var errorResult = EnsureSecureConnection(request);
+            if (errorResult != null)
+            {
+                context.Result = errorResult;
+                return;
+            }
+
+            // 2. Get XElement and SalesforceNotifications from the request body.
             var modelState = context.ModelState;
             var actionContext = new ActionContext(
                 context.HttpContext,
@@ -94,11 +113,15 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
             var data = await ReadAsXmlAsync(actionContext, context.ValueProviderFactories);
             if (data == null)
             {
-                // ReadAsXmlAsync returns null when model state is valid only when other filters will log and return
-                // errors about the same conditions.
-                if (!modelState.IsValid)
+                if (modelState.IsValid)
                 {
-                   context.Result = WebHookResultUtilities.CreateErrorResult(modelState);
+                    // ReadAsXmlAsync returns null when model state is valid only when other filters will log and
+                    // return errors about the same conditions. Let those filters run.
+                    await next();
+                }
+                else
+                {
+                    context.Result = WebHookResultUtilities.CreateErrorResult(modelState);
                 }
 
                 return;
@@ -107,7 +130,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
             // Got a valid XML body. From this point on, all responses should contain XML.
             var notifications = new SalesforceNotifications(data);
 
-            // Ensure that the organization ID exists and matches the expected value.
+            // 3. Ensure that the organization ID exists and matches the expected value.
             var organizationId = GetShortOrganizationId(notifications.OrganizationId);
             if (string.IsNullOrEmpty(organizationId))
             {
@@ -125,9 +148,13 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 return;
             }
 
-            var request = context.HttpContext.Request;
-            var routeData = context.RouteData;
-            var secret = await GetReceiverConfig(request, routeData, SalesforceConstants.ConfigurationName, 15, 18);
+            var secret = await GetReceiverConfig(
+                request,
+                routeData,
+                SalesforceConstants.ConfigurationName,
+                SalesforceConstants.SecretKeyMinLength,
+                SalesforceConstants.SecretKeyMaxLength);
+
             var secretKey = GetShortOrganizationId(secret);
             if (!SecretEqual(organizationId, secretKey))
             {
@@ -145,7 +172,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 return;
             }
 
-            // Get the event name.
+            // 4. Get the event name.
             var eventName = notifications.ActionId;
             if (string.IsNullOrEmpty(eventName))
             {
@@ -163,10 +190,12 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 return;
             }
 
-            // Success. Provide request data and event name for model binding.
+            // 5. Success. Provide request data and event name for model binding.
             routeData.Values[WebHookConstants.EventKeyName] = eventName;
             context.HttpContext.Items[typeof(XElement)] = data;
             context.HttpContext.Items[typeof(SalesforceNotifications)] = notifications;
+
+            await next();
         }
 
         /// <summary>

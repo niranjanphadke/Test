@@ -23,5 +23,15 @@ namespace Microsoft.AspNetCore.WebHooks
         /// Gets the name of the Salesforce WebHook receiver.
         /// </summary>
         public static string ReceiverName => "sfsoap";
+
+        /// <summary>
+        /// Gets the minimum length of the secret key configured for this receiver.
+        /// </summary>
+        public static int SecretKeyMinLength => 15;
+
+        /// <summary>
+        /// Gets the maximum length of the secret key configured for this receiver.
+        /// </summary>
+        public static int SecretKeyMaxLength => 18;
     }
 }

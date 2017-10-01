@@ -4,7 +4,9 @@
 using System;
 using System.ComponentModel;
 using Microsoft.AspNetCore.WebHooks;
+using Microsoft.AspNetCore.WebHooks.Filters;
 using Microsoft.AspNetCore.WebHooks.Metadata;
+using Microsoft.AspNetCore.WebHooks.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -15,6 +17,8 @@ namespace Microsoft.Extensions.DependencyInjection
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class SalesforceMvcCoreBuilderExtensions
     {
+        private static readonly Action<WebHookOptions> OptionsSetupAction = SetupWebHookOptions;
+
         /// <summary>
         /// Add Salesforce WebHook configuration and services to the specified <paramref name="builder"/>.
         /// </summary>
@@ -27,12 +31,17 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IWebHookMetadata, SalesforceMetadata>());
+            var services = builder.Services;
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<IWebHookMetadata, SalesforceMetadata>());
+            services.TryAddSingleton<ISalesforceResultCreator, SalesforceResultCreator>();
 
             // ??? Are the [DataContract] formatters also needed? XmlSerializer is enough for at least XElement.
+            // ??? Does SalesforceAcknowledgmentFilter need a non-default Order too?
             return builder
                 .AddXmlSerializerFormatters()
-                .AddWebHooks();
+                .AddWebHooks(OptionsSetupAction)
+                .AddSingletonFilter<SalesforceAcknowledgmentFilter>()
+                .AddSingletonFilter<SalesforceVerifyOrganizationIdFilter>(WebHookSecurityFilter.Order);
         }
 
         /// <summary>
@@ -60,6 +69,14 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.Services.Configure(setupAction);
 
             return builder;
+        }
+
+        private static void SetupWebHookOptions(WebHookOptions options)
+        {
+            if (!options.HttpContextItemsTypes.Contains(typeof(SalesforceNotifications)))
+            {
+                options.HttpContextItemsTypes.Add(typeof(SalesforceNotifications));
+            }
         }
     }
 }
