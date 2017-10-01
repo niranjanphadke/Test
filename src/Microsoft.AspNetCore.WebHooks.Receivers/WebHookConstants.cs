@@ -35,9 +35,9 @@ namespace Microsoft.AspNetCore.WebHooks
         /// <para>
         /// Gets the key used to retrieve a configuration entry indicating the
         /// <see cref="Filters.WebHookSecurityFilter.EnsureSecureConnection"/> should not ensure a secure (HTTPS)
-        /// connection with the sender. Configuration value, if any, should parse as a <c>bool</c>. If that parsed
-        /// configuration value is <c>true</c>, the HTTPS check is disabled. Otherwise i.e. if the configuration value
-        /// does not exist, cannot be parsed, or parses as <c>false</c>,
+        /// connection with the sender. Configuration value, if any, should parse as a <see cref="bool"/>. If that
+        /// parsed configuration value is <see langword="true"/>, the HTTPS check is disabled. Otherwise i.e. if the
+        /// configuration value does not exist, cannot be parsed, or parses as <see langword="false"/>,
         /// <see cref="Filters.WebHookSecurityFilter.EnsureSecureConnection"/> performs the check.
         /// </para>
         /// <para>
@@ -49,7 +49,7 @@ namespace Microsoft.AspNetCore.WebHooks
         /// Most, if not all, receiver configurations include
         /// <see cref="Filters.WebHookSecurityFilter.EnsureSecureConnection"/> calls. For example,
         /// <see cref="Filters.WebHookVerifyCodeFilter"/> calls the method if
-        /// <see cref="Metadata.IWebHookSecurityMetadata.VerifyCodeParameter"/> is <c>true</c>.
+        /// <see cref="Metadata.IWebHookSecurityMetadata.VerifyCodeParameter"/> is <see langword="true"/>.
         /// </remarks>
         public static string DisableHttpsCheckConfigurationKey => "MS_WebHookDisableHttpsCheck";
 

@@ -40,24 +40,24 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// Gets the <see cref="IOrderedFilter.Order"/> recommended for all <see cref="WebHookVerifyMethodFilter"/>
         /// instances. The recommended filter sequence is
         /// <list type="number">
-        /// <item><description>
+        /// <item>
         /// Confirm signature or <c>code</c> query parameter (e.g. in <see cref="WebHookVerifyCodeFilter"/> or a
         /// <see cref="WebHookVerifyBodyContentFilter"/> subclass).
-        /// </description></item>
-        /// <item><description>
+        /// </item>
+        /// <item>
         /// Confirm required headers and query parameters are provided (in
         /// <see cref="WebHookVerifyRequiredValueFilter"/>).
-        /// </description></item>
-        /// <item><description>
+        /// </item>
+        /// <item>
         /// Short-circuit GET or HEAD requests, if receiver supports either (in
         /// <see cref="WebHookGetResponseFilter"/>).
-        /// </description></item>
-        /// <item><description>Confirm it's a POST request (in this filter).</description></item>
-        /// <item><description>Confirm body type (in <see cref="WebHookVerifyBodyTypeFilter"/>).</description></item>
-        /// <item><description>
+        /// </item>
+        /// <item>Confirm it's a POST request (in this filter).</item>
+        /// <item>Confirm body type (in <see cref="WebHookVerifyBodyTypeFilter"/>).</item>
+        /// <item>
         /// Short-circuit ping requests, if not done in <see cref="WebHookGetResponseFilter"/> for this receiver (in
         /// <see cref="WebHookPingResponseFilter"/>).
-        /// </description></item>
+        /// </item>
         /// </list>
         /// </summary>
         public static int Order => WebHookGetResponseFilter.Order + 10;

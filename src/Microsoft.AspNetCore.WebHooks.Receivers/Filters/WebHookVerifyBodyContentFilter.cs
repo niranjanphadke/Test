@@ -62,7 +62,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// </summary>
         /// <param name="inputA">The first secret to compare.</param>
         /// <param name="inputB">The second secret to compare.</param>
-        /// <returns>Returns <c>true</c> if the two secrets are equal; <c>false</c> otherwise.</returns>
+        /// <returns><see langword="true"/> if the two secrets are equal; <see langword="false"/> otherwise.</returns>
         [MethodImpl(MethodImplOptions.NoOptimization)]
         protected internal static bool SecretEqual(byte[] inputA, byte[] inputB)
         {
@@ -113,10 +113,10 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// <param name="request">The current <see cref="HttpRequest"/>.</param>
         /// <param name="headerName">The name of the HTTP request header to look up.</param>
         /// <param name="errorResult">
-        /// Set to <c>null</c> in the success case. When a check fails, an <see cref="IActionResult"/> that when
-        /// executed will produce a response containing details about the problem.
+        /// Set to <see langword="null"/> in the success case. When a check fails, an <see cref="IActionResult"/> that
+        /// when executed will produce a response containing details about the problem.
         /// </param>
-        /// <returns>The signature header; <c>null</c> if this cannot be found.</returns>
+        /// <returns>The signature header; <see langword="null"/> if this cannot be found.</returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposed by caller")]
         protected virtual string GetRequestHeader(
             HttpRequest request,
@@ -221,11 +221,12 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// The name of the HTTP header containing the <paramref name="hexEncodedValue"/>.
         /// </param>
         /// <param name="errorResult">
-        /// Set to <c>null</c> if decoding is successful. Otherwise, an <see cref="IActionResult"/> that when executed
-        /// will produce a response containing details about the problem.
+        /// Set to <see langword="null"/> if decoding is successful. Otherwise, an <see cref="IActionResult"/> that
+        /// when executed will produce a response containing details about the problem.
         /// </param>
         /// <returns>
-        /// If successful, the <see cref="byte"/> array containing the decoded hash. <c>null</c> if any issues occur.
+        /// If successful, the <see cref="byte"/> array containing the decoded hash. <see langword="null"/> if any
+        /// issues occur.
         /// </returns>
         protected virtual byte[] GetDecodedHash(
             string hexEncodedValue,

@@ -49,7 +49,7 @@ namespace Microsoft.AspNetCore.WebHooks
         /// <summary>
         /// Gets or sets the name of the event the associated controller action accepts.
         /// </summary>
-        /// <value>Default value is <c>null</c>, indicating this action accepts all events.</value>
+        /// <value>Default value is <see langword="null"/>, indicating this action accepts all events.</value>
         public string EventName
         {
             get

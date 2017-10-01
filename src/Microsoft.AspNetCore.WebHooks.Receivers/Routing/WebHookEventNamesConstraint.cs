@@ -36,7 +36,9 @@ namespace Microsoft.AspNetCore.WebHooks.Routing
         /// <param name="context">The <see cref="ActionConstraintContext"/>.</param>
         /// <param name="eventName">The event name to match.</param>
         /// <param name="pingEventName">Name of the ping event this action expects, if any.</param>
-        /// <returns><c>true</c> if the action is valid for selection; <c>false</c> otherwise.</returns>
+        /// <returns>
+        /// <see langword="true"/> if the action is valid for selection; <see langword="false"/> otherwise.
+        /// </returns>
         protected bool Accept(ActionConstraintContext context, string eventName, string pingEventName)
         {
             if (context == null)

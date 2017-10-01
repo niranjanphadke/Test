@@ -32,7 +32,7 @@ namespace Microsoft.AspNetCore.WebHooks.Serialization
         /// <see cref="DateTime"/> gets serialized to an integer.
         /// </summary>
         /// <param name="stringConverter">
-        /// When <c>true</c> only deserializes string values and serializes to a string value;
+        /// When <see langword="true"/> only deserializes string values and serializes to a string value;
         /// otherwise deserializes string and integer values and serializes to an integer value.
         /// </param>
         protected UnixTimeConverter(bool stringConverter)

@@ -18,13 +18,13 @@ namespace Microsoft.AspNetCore.WebHooks
     /// </para>
     /// <para>
     /// The '<c>MS_WebHookReceiverSecret_SalesforceSoap</c>' configuration value contains Salesforce Organization IDs.
-    /// The Organizational IDs can be found at <c>http://www.salesforce.com</c> under
+    /// The Organizational IDs can be found at <see href="http://www.salesforce.com"/> under
     /// <c>Setup | Company Profile | Company Information</c>.
     /// </para>
     /// <para>
     /// An example Salesforce WebHook URI is '<c>https://&lt;host&gt;/api/webhooks/incoming/sfsoap/{id}</c>'.
-    /// See <c>https://go.microsoft.com/fwlink/?linkid=838587</c> for additional details about Salesforce WebHook
-    /// requests.
+    /// See <see href="https://go.microsoft.com/fwlink/?linkid=838587"/> for additional details about Salesforce
+    /// WebHook requests.
     /// </para>
     /// </summary>
     public class SalesforceWebHookAttribute : WebHookAttribute
@@ -35,7 +35,9 @@ namespace Microsoft.AspNetCore.WebHooks
         /// Salesforce WebHook endpoint.
         /// </para>
         /// <para>This constructor should usually be used at most once in a WebHook application.</para>
-        /// <para>The default route <see cref="Mvc.Routing.IRouteTemplateProvider.Name"/> is <c>null</c>.</para>
+        /// <para>
+        /// The default route <see cref="Mvc.Routing.IRouteTemplateProvider.Name"/> is <see langword="null"/>.
+        /// </para>
         /// </summary>
         public SalesforceWebHookAttribute()
             : base(SalesforceConstants.ReceiverName)

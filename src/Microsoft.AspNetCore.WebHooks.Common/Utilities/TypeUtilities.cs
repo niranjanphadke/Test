@@ -19,7 +19,9 @@ namespace Microsoft.AspNetCore.WebHooks.Utilities
         /// </summary>
         /// <typeparam name="T">The type to test against.</typeparam>
         /// <param name="type">The <see cref="TypeInfo"/> to test.</param>
-        /// <returns><c>true</c> if the type is of type <typeparamref name="T"/>.</returns>
+        /// <returns>
+        /// <see langword="true"/>if the type is of type <typeparamref name="T"/>; <see langword="false"/> otherwise.
+        /// </returns>
         public static bool IsType<T>(TypeInfo type)
         {
             if (type == null)

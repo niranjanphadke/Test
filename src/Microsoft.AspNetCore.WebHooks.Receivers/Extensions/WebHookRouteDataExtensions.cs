@@ -17,8 +17,8 @@ namespace Microsoft.AspNetCore.Routing
         /// </summary>
         /// <param name="routeData">The <see cref="RouteData"/> for the current request.</param>
         /// <returns>
-        /// <c>true</c> if an indication <see cref="WebHookReceiverExistsConstraint"/> ran successfully was found in
-        /// the <paramref name="routeData"/>; <c>false</c> otherwise.
+        /// <see langword="true"/> if an indication <see cref="WebHookReceiverExistsConstraint"/> ran successfully was
+        /// found in the <paramref name="routeData"/>; <see langword="false"/> otherwise.
         /// </returns>
         public static bool GetReceiverExists(this RouteData routeData)
         {
@@ -42,7 +42,8 @@ namespace Microsoft.AspNetCore.Routing
         /// <param name="routeData">The <see cref="RouteData"/> for the current request.</param>
         /// <param name="eventNames">Set to the event names identified in the request.</param>
         /// <returns>
-        /// <c>true</c> if event names were found in the <paramref name="routeData"/>; <c>false</c> otherwise.
+        /// <see langword="true"/> if event names were found in the <paramref name="routeData"/>;
+        /// <see langword="false"/> otherwise.
         /// </returns>
         public static bool TryGetEventNames(this RouteData routeData, out string[] eventNames)
         {
@@ -88,7 +89,8 @@ namespace Microsoft.AspNetCore.Routing
         /// <param name="routeData">The <see cref="RouteData"/> for the current request.</param>
         /// <param name="id">Set to the id of the requested receiver.</param>
         /// <returns>
-        /// <c>true</c> if a receiver id was found in the <paramref name="routeData"/>; <c>false</c> otherwise.
+        /// <see langword="true"/> if a receiver id was found in the <paramref name="routeData"/>;
+        /// <see langword="false"/> otherwise.
         /// </returns>
         public static bool TryGetReceiverId(this RouteData routeData, out string id)
         {
@@ -113,7 +115,8 @@ namespace Microsoft.AspNetCore.Routing
         /// <param name="routeData">The <see cref="RouteData"/> for the current request.</param>
         /// <param name="receiverName">Set to the name of the requested receiver.</param>
         /// <returns>
-        /// <c>true</c> if a receiver name was found in the <paramref name="routeData"/>; <c>false</c> otherwise.
+        /// <see langword="true"/> if a receiver name was found in the <paramref name="routeData"/>;
+        /// <see langword="false"/> otherwise.
         /// </returns>
         public static bool TryGetReceiverName(this RouteData routeData, out string receiverName)
         {

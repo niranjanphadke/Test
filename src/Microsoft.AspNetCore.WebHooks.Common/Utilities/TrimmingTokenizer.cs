@@ -9,7 +9,7 @@ using Microsoft.Extensions.Primitives;
 namespace Microsoft.AspNetCore.WebHooks.Utilities
 {
     /// <summary>
-    /// Splits a <see langword="string"/> or <see cref="StringSegment"/> into trimmed <see cref="StringSegment"/>s.
+    /// Splits a <see cref="string"/> or <see cref="StringSegment"/> into trimmed <see cref="StringSegment"/>s.
     /// </summary>
     public struct TrimmingTokenizer : IEnumerable<StringSegment>
     {
@@ -19,8 +19,8 @@ namespace Microsoft.AspNetCore.WebHooks.Utilities
         /// Instantiates a new <see cref="TrimmingTokenizer"/> with given <paramref name="value"/>. Will split segments
         /// using <paramref name="separators"/>.
         /// </summary>
-        /// <param name="value">The <see langword="string"/> to split and trim.</param>
-        /// <param name="separators">The collection of separator <see langword="char"/>s controlling the split.</param>
+        /// <param name="value">The <see cref="string"/> to split and trim.</param>
+        /// <param name="separators">The collection of separator <see cref="char"/>s controlling the split.</param>
         public TrimmingTokenizer(string value, params char[] separators)
         {
             _tokenizer = new StringTokenizer(value, separators);
@@ -31,7 +31,7 @@ namespace Microsoft.AspNetCore.WebHooks.Utilities
         /// using <paramref name="separators"/>.
         /// </summary>
         /// <param name="value">The <see cref="StringSegment"/> to split and trim.</param>
-        /// <param name="separators">The collection of separator <see langword="char"/>s controlling the split.</param>
+        /// <param name="separators">The collection of separator <see cref="char"/>s controlling the split.</param>
         public TrimmingTokenizer(StringSegment value, params char[] separators)
         {
             _tokenizer = new StringTokenizer(value, separators);
