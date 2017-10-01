@@ -56,6 +56,31 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
+        /// Add WebHook configuration and services to the specified <paramref name="builder"/>.
+        /// </summary>
+        /// <param name="builder">The <see cref="IMvcCoreBuilder" /> to configure.</param>
+        /// <param name="setupAction">
+        /// An <see cref="Action{WebHookOptions}"/> to configure the provided <see cref="WebHookOptions"/>.
+        /// </param>
+        /// <returns>The <paramref name="builder"/>.</returns>
+        public static IMvcCoreBuilder AddWebHooks(this IMvcCoreBuilder builder, Action<WebHookOptions> setupAction)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+            if (setupAction == null)
+            {
+                throw new ArgumentNullException(nameof(setupAction));
+            }
+
+            builder.AddWebHooks();
+            builder.Services.Configure(setupAction);
+
+            return builder;
+        }
+
+        /// <summary>
         /// Add <typeparamref name="TFilter"/> as a singleton filter. Register <typeparamref name="TFilter"/> as a
         /// singleton service and add it to <see cref="AspNetCore.Mvc.MvcOptions.Filters"/>.
         /// </summary>
