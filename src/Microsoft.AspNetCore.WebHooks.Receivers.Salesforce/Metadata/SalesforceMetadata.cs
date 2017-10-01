@@ -21,6 +21,9 @@ namespace Microsoft.AspNetCore.WebHooks.Metadata
         /// <inheritdoc />
         public WebHookBodyType BodyType => WebHookBodyType.Xml;
 
+        /// <inheritdoc />
+        public bool UseHttpContextModelBinder => true;
+
         // IWebHookSecurityMetadata...
 
         /// <inheritdoc />

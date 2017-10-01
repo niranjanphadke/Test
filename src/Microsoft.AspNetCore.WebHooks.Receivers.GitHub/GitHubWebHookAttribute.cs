@@ -72,5 +72,8 @@ namespace Microsoft.AspNetCore.WebHooks
 
         /// <inheritdoc />
         WebHookBodyType IWebHookRequestMetadata.BodyType => AcceptFormData ? WebHookBodyType.Form : WebHookBodyType.Json;
+
+        /// <inheritdoc />
+        public bool UseHttpContextModelBinder => false;
     }
 }

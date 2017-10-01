@@ -165,9 +165,6 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
 
             // Success. Provide request data and event name for model binding.
             routeData.Values[WebHookConstants.EventKeyName] = eventName;
-
-            // TODO: Add a model binder that maps from these Items. Binding SalesforceNotifications parameters will
-            // TODO: currently fail and binding XElement parameters will duplicate work already done here.
             context.HttpContext.Items[typeof(XElement)] = data;
             context.HttpContext.Items[typeof(SalesforceNotifications)] = notifications;
         }

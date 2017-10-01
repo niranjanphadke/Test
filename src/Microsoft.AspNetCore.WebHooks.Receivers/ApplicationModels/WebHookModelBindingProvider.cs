@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebHooks.Metadata;
+using Microsoft.AspNetCore.WebHooks.ModelBinding;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.AspNetCore.WebHooks.ApplicationModels
@@ -19,6 +21,17 @@ namespace Microsoft.AspNetCore.WebHooks.ApplicationModels
     /// </summary>
     public class WebHookModelBindingProvider : IApplicationModelProvider
     {
+        private readonly IList<Type> _allowedTypes;
+
+        /// <summary>
+        /// Instantiates a new <see cref="WebHookModelBindingProvider"/> instance.
+        /// </summary>
+        /// <param name="optionsAccessor">The accessor for the <see cref="WebHookOptions"/>.</param>
+        public WebHookModelBindingProvider(IOptions<WebHookOptions> optionsAccessor)
+        {
+            _allowedTypes = optionsAccessor.Value.HttpContextItemsTypes;
+        }
+
         /// <inheritdoc />
         public int Order => WebHookMetadataProvider.Order + 20;
 
@@ -63,7 +76,7 @@ namespace Microsoft.AspNetCore.WebHooks.ApplicationModels
             // No-op
         }
 
-        private static void Apply(
+        private void Apply(
             IWebHookBindingMetadata bindingMetadata,
             IWebHookRequestMetadata requestMetadata,
             ParameterModel parameter)
@@ -94,7 +107,7 @@ namespace Microsoft.AspNetCore.WebHooks.ApplicationModels
                     break;
 
                 case "DATA":
-                    SourceData(bindingInfo, requestMetadata);
+                    SourceData(bindingInfo, parameterType, requestMetadata);
                     break;
 
                 case "EVENT":
@@ -134,16 +147,28 @@ namespace Microsoft.AspNetCore.WebHooks.ApplicationModels
                          typeof(JContainer).IsAssignableFrom(parameterType) ||
                          typeof(XElement).IsAssignableFrom(parameterType)))
                     {
-                        SourceData(bindingInfo, requestMetadata);
+                        SourceData(bindingInfo, parameterType, requestMetadata);
                     }
                     break;
             }
         }
 
-        private static void SourceData(BindingInfo bindingInfo, IWebHookRequestMetadata requestMetadata)
+        private void SourceData(
+            BindingInfo bindingInfo,
+            Type parameterType,
+            IWebHookRequestMetadata requestMetadata)
         {
             if (requestMetadata == null)
             {
+                return;
+            }
+
+            if (requestMetadata.UseHttpContextModelBinder &&
+                _allowedTypes.Any(allowedType => parameterType.IsAssignableFrom(allowedType)))
+            {
+                bindingInfo.BinderModelName = WebHookErrorKeys.MessageKey;
+                bindingInfo.BinderType = typeof(WebHookHttpContextModelBinder);
+                bindingInfo.BindingSource = BindingSource.Custom;
                 return;
             }
 
