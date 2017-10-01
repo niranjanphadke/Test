@@ -75,6 +75,15 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// <inheritdoc />
         public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+            if (next == null)
+            {
+                throw new ArgumentNullException(nameof(next));
+            }
+
             var modelState = context.ModelState;
             var actionContext = new ActionContext(
                 context.HttpContext,

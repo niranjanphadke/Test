@@ -149,14 +149,12 @@ namespace Microsoft.AspNetCore.WebHooks.ApplicationModels
 
             if (requestMetadata.BodyType == WebHookBodyType.Form)
             {
-                // ??? Should we instead support multiple parameters binding to portions of the form data i.e.
-                // ??? leave BinderModelName null and let the parameter name bleed through into model binding?
-                bindingInfo.BinderModelName = string.Empty;
+                bindingInfo.BinderModelName = WebHookErrorKeys.MessageKey;
                 bindingInfo.BindingSource = BindingSource.Form;
                 return;
             }
 
-            bindingInfo.BinderModelName = string.Empty;
+            bindingInfo.BinderModelName = WebHookErrorKeys.MessageKey;
             bindingInfo.BindingSource = BindingSource.Body;
         }
 
