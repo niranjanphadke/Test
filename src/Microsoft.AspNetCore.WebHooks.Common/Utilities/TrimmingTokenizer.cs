@@ -114,9 +114,10 @@ namespace Microsoft.AspNetCore.WebHooks.Utilities
         /// </summary>
         public struct Enumerator : IEnumerator<StringSegment>, IEnumerator, IDisposable
         {
-            private readonly StringTokenizer.Enumerator _enumerator;
             private readonly TrimmingTokenizer _tokenizer;
+
             private int _count;
+            private StringTokenizer.Enumerator _enumerator;
             private StringSegment _remainder;
 
             // ??? Should we instead pass the TrimmingTokenizer by ref? Current signature does not match
@@ -127,10 +128,9 @@ namespace Microsoft.AspNetCore.WebHooks.Utilities
             /// <param name="tokenizer">The containing <see cref="TrimmingTokenizer"/>.</param>
             public Enumerator(TrimmingTokenizer tokenizer)
             {
-                _enumerator = tokenizer._tokenizer.GetEnumerator();
                 _tokenizer = tokenizer;
-
                 _count = 0;
+                _enumerator = tokenizer._tokenizer.GetEnumerator();
                 _remainder = StringSegment.Empty;
             }
 
