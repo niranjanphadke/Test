@@ -19,10 +19,10 @@ namespace Microsoft.AspNet.WebHooks
     /// <summary>
     /// Provides an <see cref="IWebHookReceiver"/> implementation which supports Salesforce SOAP-based Outbound Messages as a WebHook.
     /// A sample WebHook URI is of the form '<c>https://&lt;host&gt;/api/webhooks/incoming/sfsoap/{id}</c>'.
-    /// For security reasons, the WebHook URI must be an <c>https</c> URI and the '<c>MS_WebHookReceiverSecret_SalesforceSoap</c>' 
-    /// application setting must be configured to the Salesforce Organization IDs. The Organizational IDs can be found at 
+    /// For security reasons, the WebHook URI must be an <c>https</c> URI and the '<c>MS_WebHookReceiverSecret_SalesforceSoap</c>'
+    /// application setting must be configured to the Salesforce Organization IDs. The Organizational IDs can be found at
     /// <c>http://www.salesforce.com</c> under <c>Setup | Company Profile | Company Information</c>.
-    /// For details about Salesforce Outbound Messages, see <c>https://go.microsoft.com/fwlink/?linkid=838587</c>. 
+    /// For details about Salesforce Outbound Messages, see <c>https://go.microsoft.com/fwlink/?linkid=838587</c>.
     /// </summary>
     public class SalesforceSoapWebHookReceiver : WebHookReceiver
     {
@@ -97,6 +97,8 @@ namespace Microsoft.AspNet.WebHooks
                 // Add SOAP response if not already present
                 if (response == null || response.Content == null || !response.Content.IsXml())
                 {
+                    // ??? Shouldn't this use response.StatusCode (if any) to set new status? Perhaps also to choose
+                    // ??? Microsoft.AspNet.WebHooks.Messages.FaultResponse.xml content.
                     string ack = ReadResource("Microsoft.AspNet.WebHooks.Messages.NotificationResponse.xml");
                     response = GetXmlResponse(request, HttpStatusCode.OK, ack);
                 }

@@ -16,7 +16,7 @@ namespace Microsoft.AspNet.WebHooks
     public static class WebHookHandlerContextExtensions
     {
         /// <summary>
-        /// Gets the <see cref="WebHookHandlerContext.Data"/> property as type <typeparamref name="T"/>. If the 
+        /// Gets the <see cref="WebHookHandlerContext.Data"/> property as type <typeparamref name="T"/>. If the
         /// contents is not of type <typeparamref name="T"/> then <c>null</c> is returned.
         /// </summary>
         /// <typeparam name="T">The type to convert <see cref="WebHookHandlerContext.Data"/> to.</typeparam>
@@ -30,6 +30,8 @@ namespace Microsoft.AspNet.WebHooks
                 return default(T);
             }
 
+            // ??? Shouldn't condition be !typeof(T).IsAssignableFrom(typeof(JToken))? Have a JToken and want T.
+            // ??? Or, use !typeof(T).IsAssignableFrom(context.Data.GetType()) ?
             if (context.Data is JToken && !typeof(JToken).IsAssignableFrom(typeof(T)))
             {
                 try
