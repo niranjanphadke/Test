@@ -6,7 +6,7 @@ namespace Microsoft.AspNetCore.WebHooks.Metadata
     /// <summary>
     /// An <see cref="IWebHookMetadata"/> service containing metadata about the Salesforce receiver.
     /// </summary>
-    public class SalesforceMetadata : WebHookMetadata, IWebHookRequestMetadataService, IWebHookSecurityMetadata
+    public class SalesforceMetadata : WebHookMetadata, IWebHookRequestMetadataService
     {
         /// <summary>
         /// Instantiates a new <see cref="SalesforceMetadata"/> instance.
@@ -16,23 +16,10 @@ namespace Microsoft.AspNetCore.WebHooks.Metadata
         {
         }
 
-        // IWebHookRequestMetadataService...
-
         /// <inheritdoc />
         public WebHookBodyType BodyType => WebHookBodyType.Xml;
 
         /// <inheritdoc />
         public bool UseHttpContextModelBinder => true;
-
-        // IWebHookSecurityMetadata...
-
-        /// <inheritdoc />
-        public bool VerifyCodeParameter => false;
-
-        /// <inheritdoc />
-        public bool ShortCircuitGetRequests => false;
-
-        /// <inheritdoc />
-        public WebHookGetRequest WebHookGetRequest => null;
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SalesforceCoreReceiver.Controllers
 {
+    // TODO: Test this sample more thoroughly.
     public class SalesforceController : ControllerBase
     {
         private readonly ILogger _logger;
