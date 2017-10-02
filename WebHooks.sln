@@ -236,6 +236,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PusherCoreReceiver", "sampl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesforceCoreReceiver", "samples\SalesforceCoreReceiver\SalesforceCoreReceiver.csproj", "{3762D23D-A7BF-499A-BF33-AFAF4647358E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackCoreReceiver", "samples\SlackCoreReceiver\SlackCoreReceiver.csproj", "{D3A8D951-D55A-414E-8A5D-F8A8AF1F61FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CodeAnalysis|Any CPU = CodeAnalysis|Any CPU
@@ -819,6 +821,12 @@ Global
 		{3762D23D-A7BF-499A-BF33-AFAF4647358E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3762D23D-A7BF-499A-BF33-AFAF4647358E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3762D23D-A7BF-499A-BF33-AFAF4647358E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A8D951-D55A-414E-8A5D-F8A8AF1F61FA}.CodeAnalysis|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A8D951-D55A-414E-8A5D-F8A8AF1F61FA}.CodeAnalysis|Any CPU.Build.0 = Debug|Any CPU
+		{D3A8D951-D55A-414E-8A5D-F8A8AF1F61FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A8D951-D55A-414E-8A5D-F8A8AF1F61FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A8D951-D55A-414E-8A5D-F8A8AF1F61FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A8D951-D55A-414E-8A5D-F8A8AF1F61FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -926,9 +934,10 @@ Global
 		{4563A906-6FAB-46E7-B281-C88A391EE48A} = {5759F48E-0D9E-457F-A93D-40FBC422B0CE}
 		{C7E3E4AA-39A8-46FB-B36D-837DEE69CE18} = {5759F48E-0D9E-457F-A93D-40FBC422B0CE}
 		{3762D23D-A7BF-499A-BF33-AFAF4647358E} = {5759F48E-0D9E-457F-A93D-40FBC422B0CE}
+		{D3A8D951-D55A-414E-8A5D-F8A8AF1F61FA} = {5759F48E-0D9E-457F-A93D-40FBC422B0CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {12CE6238-F847-4984-8622-1ED46072150A}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
+		SolutionGuid = {12CE6238-F847-4984-8622-1ED46072150A}
 	EndGlobalSection
 EndGlobal
