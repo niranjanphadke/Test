@@ -9,7 +9,6 @@ using Newtonsoft.Json.Converters;
 
 namespace Microsoft.AspNetCore.WebHooks.Serialization
 {
-    // TODO: Remove this class if it remains unused.
     /// <summary>
     /// Converts a Unix time stamp to and from a <see cref="DateTime"/>.
     /// </summary>
