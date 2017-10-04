@@ -37,7 +37,7 @@ namespace Microsoft.AspNetCore.WebHooks
     /// </summary>
     public class SlackWebHookAttribute : WebHookAttribute, IResultFilter, IApiResponseMetadataProvider
     {
-        private static readonly ProducesAttribute Produces = new ProducesAttribute("application/json", "text/json");
+        private static readonly ProducesAttribute Produces = new ProducesAttribute("application/json");
 
         /// <summary>
         /// <para>
