@@ -23,7 +23,7 @@ namespace Microsoft.AspNetCore.WebHooks
         Task<ContentResult> GetFailedResultAsync(string message);
 
         /// <summary>
-        /// Gets an <see cref="IActionResult"/> that when executed will produce a response with status code 200 "OK"
+        /// Gets an <see cref="ContentResult"/> that when executed will produce a response with status code 200 "OK"
         /// and an XML body containing a Salesforce acknowledgment message.
         /// </summary>
         /// <returns>

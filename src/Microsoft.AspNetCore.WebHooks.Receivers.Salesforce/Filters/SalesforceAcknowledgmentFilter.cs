@@ -58,33 +58,36 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 throw new ArgumentNullException(nameof(next));
             }
 
-            if (context.RouteData.TryGetReceiverName(out var receiverName) && IsApplicable(receiverName))
+            if (!context.RouteData.TryGetReceiverName(out var receiverName) || !IsApplicable(receiverName))
             {
-                // ??? Are these conditions too fragile? May not handle new subclasses of the result types.
-                if (context.Result == null || context.Result is EmptyResult)
-                {
-                    // ??? Should these cases short-circuit other result filters?
-                    context.Result = await _resultCreator.GetSuccessResultAsync();
-                }
-                else if (context.Result is ContentResult contentResult &&
-                     string.IsNullOrEmpty(contentResult.Content) &&
-                     InRangeStatusCode(contentResult.StatusCode))
-                {
-                    var newResult = await _resultCreator.GetSuccessResultAsync();
-                    if (contentResult.StatusCode.HasValue)
-                    {
-                        newResult.StatusCode = newResult.StatusCode;
-                    }
+                await next();
+                return;
+            }
 
-                    context.Result = newResult;
-                }
-                else if (context.Result is StatusCodeResult statusCodeResult &&
-                     InRangeStatusCode(statusCodeResult.StatusCode))
+            // ??? Are these conditions too fragile? May not handle new subclasses of the result types.
+            // ??? Should these cases short-circuit other result filters?
+            if (context.Result == null || context.Result is EmptyResult)
+            {
+                context.Result = await _resultCreator.GetSuccessResultAsync();
+            }
+            else if (context.Result is ContentResult contentResult &&
+                    string.IsNullOrEmpty(contentResult.Content) &&
+                    InRangeStatusCode(contentResult.StatusCode))
+            {
+                var newResult = await _resultCreator.GetSuccessResultAsync();
+                if (contentResult.StatusCode.HasValue)
                 {
-                    var newResult = await _resultCreator.GetSuccessResultAsync();
-                    newResult.StatusCode = statusCodeResult.StatusCode;
-                    context.Result = newResult;
+                    newResult.StatusCode = newResult.StatusCode;
                 }
+
+                context.Result = newResult;
+            }
+            else if (context.Result is StatusCodeResult statusCodeResult &&
+                    InRangeStatusCode(statusCodeResult.StatusCode))
+            {
+                var newResult = await _resultCreator.GetSuccessResultAsync();
+                newResult.StatusCode = statusCodeResult.StatusCode;
+                context.Result = newResult;
             }
 
             await next();

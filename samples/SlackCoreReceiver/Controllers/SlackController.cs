@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 
 namespace SlackCoreReceiver.Controllers
 {
-    // TODO: Test this sample more thoroughly.
     public class SlackController : ControllerBase
     {
         private readonly ILogger _logger;

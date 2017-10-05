@@ -71,8 +71,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
             }
 
             var routeData = context.RouteData;
-            if (!routeData.TryGetReceiverName(out var receiverName) ||
-                !IsApplicable(receiverName))
+            if (!routeData.TryGetReceiverName(out var receiverName) || !IsApplicable(receiverName))
             {
                 await next();
                 return;

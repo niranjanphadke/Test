@@ -76,7 +76,7 @@ namespace Microsoft.AspNetCore.WebHooks.Serialization
                 var message = string.Format(
                     CultureInfo.CurrentCulture,
                     Resources.DateTime_NullError,
-                    typeof(DateTime).Name);
+                    nameof(DateTime));
                 throw new InvalidOperationException(message);
             }
 
@@ -89,7 +89,7 @@ namespace Microsoft.AspNetCore.WebHooks.Serialization
                         CultureInfo.CurrentCulture,
                         Resources.DateTime_BadFormat,
                         reader.Value,
-                        typeof(DateTime).Name);
+                        nameof(DateTime));
                     throw new InvalidOperationException(message);
                 }
             }
@@ -103,7 +103,7 @@ namespace Microsoft.AspNetCore.WebHooks.Serialization
                     CultureInfo.CurrentCulture,
                     Resources.DateTime_BadFormat,
                     reader.Value,
-                    typeof(DateTime).Name);
+                    nameof(DateTime));
                 throw new InvalidOperationException(message);
             }
 

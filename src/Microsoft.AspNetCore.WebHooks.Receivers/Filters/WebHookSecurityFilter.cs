@@ -117,9 +117,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
             }
 
             // Check to see if we have been configured to ignore this check
-            var disableHttpsCheckValue = Configuration[WebHookConstants.DisableHttpsCheckConfigurationKey];
-            if (bool.TryParse(disableHttpsCheckValue, out var disableHttpsCheck) &&
-                disableHttpsCheck == true)
+            if (ReceiverConfig.IsTrue(WebHookConstants.DisableHttpsCheckConfigurationKey))
             {
                 return null;
             }

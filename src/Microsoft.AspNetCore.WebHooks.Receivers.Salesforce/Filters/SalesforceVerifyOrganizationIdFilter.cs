@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -20,9 +19,8 @@ using Microsoft.Extensions.Options;
 
 namespace Microsoft.AspNetCore.WebHooks.Filters
 {
-    // TODO: Create base version of this filter (likely as an IActionFilter) for use in e.g. Azure Alert, Dynamics CRM,
-    // TODO: Kudu, MailChimp, and Pusher receivers. Filter would require event name in request body and map that event
-    // TODO: name to route data. This would support model binding but not event-based action selection.
+    // TODO: Create similar IActionFilter for use in Azure Alert, Dynamics CRM, Kudu, MailChimp, and Pusher receivers.
+    // TODO:  Filter would require event name in request body and map that to route data. No action selection support.
     /// <summary>
     /// An <see cref="IAsyncResourceFilter"/> that verifies the Salesforce SOAP request body. Confirms the body
     /// deserializes as <see cref="XElement"/> that can be converted to <see cref="SalesforceNotifications"/>. Then
@@ -86,8 +84,7 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
             }
 
             var routeData = context.RouteData;
-            if (!routeData.TryGetReceiverName(out var receiverName) ||
-                !IsApplicable(receiverName))
+            if (!routeData.TryGetReceiverName(out var receiverName) || !IsApplicable(receiverName))
             {
                 await next();
                 return;
@@ -103,16 +100,10 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
             }
 
             // 2. Get XElement and SalesforceNotifications from the request body.
-            var modelState = context.ModelState;
-            var actionContext = new ActionContext(
-                context.HttpContext,
-                context.RouteData,
-                context.ActionDescriptor,
-                modelState);
-
-            var data = await ReadAsXmlAsync(actionContext, context.ValueProviderFactories);
+            var data = await ReadAsXmlAsync(context);
             if (data == null)
             {
+                var modelState = context.ModelState;
                 if (modelState.IsValid)
                 {
                     // ReadAsXmlAsync returns null when model state is valid only when other filters will log and
@@ -216,22 +207,19 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
         /// <summary>
         /// Reads the XML HTTP request entity body.
         /// </summary>
-        /// <param name="actionContext">The <see cref="ActionContext"/>.</param>
-        /// <param name="valueProviderFactories">The list of <see cref="IValueProviderFactory"/> instances.</param>
+        /// <param name="context">The <see cref="ResourceExecutingContext"/>.</param>
         /// <returns>
         /// A <see cref="Task"/> that on completion provides a <see cref="XElement"/> containing the HTTP request
         /// entity body.
         /// </returns>
-        protected virtual async Task<XElement> ReadAsXmlAsync(
-            ActionContext actionContext,
-            IList<IValueProviderFactory> valueProviderFactories)
+        protected virtual async Task<XElement> ReadAsXmlAsync(ResourceExecutingContext context)
         {
-            if (actionContext == null)
+            if (context == null)
             {
-                throw new ArgumentNullException(nameof(actionContext));
+                throw new ArgumentNullException(nameof(context));
             }
 
-            var request = actionContext.HttpContext.Request;
+            var request = context.HttpContext.Request;
             if (request.Body == null ||
                 !request.ContentLength.HasValue ||
                 request.ContentLength.Value == 0L ||
@@ -242,6 +230,14 @@ namespace Microsoft.AspNetCore.WebHooks.Filters
                 return null;
             }
 
+            var modelState = context.ModelState;
+            var actionContext = new ActionContext(
+                context.HttpContext,
+                context.RouteData,
+                context.ActionDescriptor,
+                modelState);
+
+            var valueProviderFactories = context.ValueProviderFactories;
             var valueProvider = await CompositeValueProvider.CreateAsync(actionContext, valueProviderFactories);
             var bindingContext = DefaultModelBindingContext.CreateBindingContext(
                 actionContext,
