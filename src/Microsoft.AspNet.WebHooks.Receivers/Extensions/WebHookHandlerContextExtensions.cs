@@ -30,10 +30,10 @@ namespace Microsoft.AspNet.WebHooks
                 return default(T);
             }
 
-            // ??? Shouldn't condition be !typeof(T).IsAssignableFrom(typeof(JToken))? Have a JToken and want T.
-            // ??? Or, use !typeof(T).IsAssignableFrom(context.Data.GetType()) ?
-            if (context.Data is JToken && !typeof(JToken).IsAssignableFrom(typeof(T)))
+            if (context.Data is JToken && !typeof(T).IsAssignableFrom(context.Data.GetType()))
             {
+                // context.Data is a JToken and the caller isn't just asking for (say) the current JObject.
+                // Do explicit conversion.
                 try
                 {
                     T data = ((JToken)context.Data).ToObject<T>();

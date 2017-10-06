@@ -94,14 +94,17 @@ namespace Microsoft.AspNet.WebHooks
                 // Call registered handlers
                 HttpResponseMessage response = await ExecuteWebHookAsync(id, context, request, new string[] { action }, notifications);
 
-                // Add SOAP response if not already present
+                // Add SOAP response body if not already present or isn't XML and handler(s) ran successfully.
                 if (response == null || response.Content == null || !response.Content.IsXml())
                 {
-                    // ??? Shouldn't this use response.StatusCode (if any) to set new status? Perhaps also to choose
-                    // ??? Microsoft.AspNet.WebHooks.Messages.FaultResponse.xml content.
-                    string ack = ReadResource("Microsoft.AspNet.WebHooks.Messages.NotificationResponse.xml");
-                    response = GetXmlResponse(request, HttpStatusCode.OK, ack);
+                    var statusCode = response?.StatusCode ?? HttpStatusCode.OK;
+                    if (statusCode >= (HttpStatusCode)200 && statusCode < (HttpStatusCode)300)
+                    {
+                        var ack = ReadResource("Microsoft.AspNet.WebHooks.Messages.NotificationResponse.xml");
+                        response = GetXmlResponse(request, statusCode, ack);
+                    }
                 }
+
                 return response;
             }
             else
